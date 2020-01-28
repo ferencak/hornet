@@ -1,0 +1,30 @@
+.footer {
+    height: 20px;
+    width: 100%;
+    background: #0e0e0e;
+    position: absolute;
+    bottom: 0;
+    z-index: 2;
+    p {
+        margin: 0px;
+        font-family: "Baloo Bhai";
+        font-size: 10px;
+        color: #ffffff29;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
+        padding-left: 10px;
+        height: -webkit-fill-available;
+        padding-right: 11px;
+        padding-top: 2px;
+        z-index: 4;
+        background: #27272766;
+    }
+    p.updates-check:hover {
+        cursor: pointer;
+    }
+    p.right {
+        float: right;
+        margin-top: -20px;
+    }
+}

@@ -1,0 +1,251 @@
+<!doctype html>
+<html style="box-shadow: 0px 0px -2px 1px black;border-radius: 5px;">
+<head>
+  <meta charset="utf-8">
+  <title>Hornet</title>
+  <base href="">
+  <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css' rel='stylesheet' type='text/css'>
+  <link href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+  <link href='https://fonts.googleapis.com/css?family=Baloo+Bhai' rel='stylesheet' type='text/css'>
+</head>
+<body class="noselect" style="background:#080808;overflow-y: hidden;">
+  <div class="title-bar noselect" style="-webkit-app-region: drag">
+    <div class="title">Hornet <app-version class="version"></app-version></span></div>
+    <div class="buttons">
+      <app-server-status></app-server-status>
+      <div class="minimize noselect" onclick="action('minimize');" style="-webkit-app-region: no-drag">-</div>
+      <div class="exit noselect" onclick="action('exit');" style="-webkit-app-region: no-drag">X</div>
+    </div>
+  </div>
+  <app-root>
+      <div class="loader">Loading...</div>
+  </app-root>
+  <script>
+      const { BrowserWindow } = require('electron').remote;
+      const { ipcRenderer } = require('electron')
+      function action(action) {
+        switch(action) {
+          case 'exit':
+            BrowserWindow.getFocusedWindow().close()
+            break;
+          case 'minimize':
+            BrowserWindow.getFocusedWindow().minimize()
+            break;
+        }
+      }
+      var bmak = {
+        ke_cnt_lmt: 150,
+        mme_cnt_lmt: 100,
+        mduce_cnt_lmt: 75,
+        pme_cnt_lmt: 25,
+        pduce_cnt_lmt: 25,
+        tme_cnt_lmt: 25,
+        tduce_cnt_lmt: 25,
+        doe_cnt_lmt: 10,
+        dme_cnt_lmt: 10,
+        vc_cnt_lmt: 100,
+        startTracking: function() {
+          bmak.ir()
+          document.addEventListener("touchmove", bmak.htm, !0) 
+          document.addEventListener("touchstart", bmak.hts, !0)
+          document.addEventListener("touchend", bmak.hte, !0)
+          document.addEventListener("touchcancel", bmak.htc, !0)
+          document.addEventListener("mousemove", bmak.hmm, !0) 
+          document.addEventListener("click", bmak.hc, !0)
+          document.addEventListener("mousedown", bmak.hmd, !0)
+          document.addEventListener("mouseup", bmak.hmu, !0)
+          document.addEventListener("pointerdown", bmak.hpd, !0)
+          document.addEventListener("pointerup", bmak.hpu, !0)
+          document.addEventListener("keydown", bmak.hkd, !0)
+          document.addEventListener("keyup", bmak.hku, !0)
+          document.addEventListener("keypress", bmak.hkp, !0)
+          console.log(bmak.get_cf_date())
+        },
+        ir: function () {
+            bmak.start_ts = Date.now ? Date.now() : +new Date, bmak.kact = "", bmak.ke_cnt = 0, bmak.ke_vel = 0, bmak.mact = "", bmak.mme_cnt = 0, bmak.mduce_cnt = 0, bmak.me_vel = 0, bmak.pact = "", bmak.pme_cnt = 0, bmak.pduce_cnt = 0, bmak.pe_vel = 0, bmak.tact = "", bmak.tme_cnt = 0, bmak.tduce_cnt = 0, bmak.te_vel = 0, bmak.doact = "", bmak.doe_cnt = 0, bmak.doe_vel = 0, bmak.dmact = "", bmak.dme_cnt = 0, bmak.dme_vel = 0, bmak.vcact = "", bmak.vc_cnt = 0, bmak.aj_indx = 0, bmak.aj_ss = 0, bmak.aj_type = -1, bmak.aj_indx_doact = 0, bmak.aj_indx_dmact = 0, bmak.aj_indx_tact = 0, bmak.me_cnt = 0, bmak.pe_cnt = 0, bmak.te_cnt = 0
+        },
+        get_cf_date: function () {
+            return Date.now ? Date.now() : +new Date
+        },
+        htm: function (a) {
+            bmak.cta(a, 1)
+        },
+        hts: function (a) {
+            bmak.cta(a, 2)
+        },
+        hte: function (a) {
+            bmak.cta(a, 3)
+        },
+        htc: function (a) {
+            bmak.cta(a, 4)
+        },
+        hmm: function (a) {
+            bmak.cma(a, 1)
+        },
+        hc: function (a) {
+            bmak.cma(a, 2)
+        },
+        hmd: function (a) {
+            bmak.cma(a, 3)
+        },
+        hmu: function (a) {
+            bmak.cma(a, 4)
+        },
+        hpd: function (a) {
+            bmak.cpa(a, 3)
+        },
+        hpu: function (a) {
+            bmak.cpa(a, 4)
+        },
+        hkd: function (a) {
+            bmak.cka(a, 1)
+        },
+        hku: function (a) {
+            bmak.cka(a, 2)
+        },
+        hkp: function (a) {
+            bmak.cka(a, 3)
+        },
+        get_type: function (a) {
+            return a = a.toLowerCase(), "text" == a || "search" == a || "url" == a || "email" == a || "tel" == a || "number" == a ? 0 : "password" == a ? 1 : 2
+        },
+        isIgn: function (a) {
+            var t = document.activeElement;
+            if (null == document.activeElement) return 0;
+            var e = t.getAttribute("type");
+            return 1 == (null == e ? -1 : bmak.get_type(e)) && bmak.fidcnt > 12 && -2 == a ? 1 : 0
+        },
+        bpd: function() {
+          let data = {
+            ke_vel: bmak.ke_vel,
+            me_vel: bmak.me_vel, 
+            doe_vel: bmak.doe_vel,
+            dme_vel: bmak.dme_vel,
+            te_vel: bmak.te_vel,
+            pe_vel: bmak.pe_vel, 
+            ke_cnt: bmak.ke_cnt,
+            me_cnt: bmak.me_cnt,
+            pe_cnt: bmak.pe_cnt,
+            te_cnt: bmak.te_cnt,
+            ta: bmak.ta ? bmak.ta : 0,
+            kact: bmak.kact,
+            mact: bmak.mact,
+            tact: bmak.tact,
+            doact: bmak.doact,
+            dmact: bmak.dmact,
+            pact: bmak.pact,
+            vcact: bmak.vcact
+          }
+          ipcRenderer.send('mouseData', data)
+        },
+        ab: function (a) {
+            if (null == a) return -1;
+            try {
+                for (var t = 0, e = 0; e < a.length; e++) {
+                    var n = a.charCodeAt(e);
+                    n < 128 && (t += n)
+                }
+                return t
+            } catch (a) {
+                return -2
+            }
+        },
+        cta: function (a, t) {
+            try {
+                if (1 == t && bmak.tme_cnt < bmak.tme_cnt_lmt || 1 != t && bmak.tduce_cnt < bmak.tduce_cnt_lmt) {
+                    var e = a || window.event,
+                        n = -1,
+                        o = -1;
+                    e && e.pageX && e.pageY ? (n = Math.floor(e.pageX), o = Math.floor(e.pageY)) : e && e.clientX && e.clientY && (n = Math.floor(e.clientX), o = Math.floor(e.clientY));
+                    var m = bmak.get_cf_date() - bmak.start_ts,
+                        r = bmak.te_cnt + "," + t + "," + m + "," + n + "," + o + ";";
+                    bmak.tact = bmak.tact + r, bmak.ta += m, bmak.te_vel = bmak.te_vel + bmak.te_cnt + t + m + n + o, bmak.doa_throttle = 0, bmak.dma_throttle = 0
+                }
+                1 == t ? bmak.tme_cnt++ : bmak.tduce_cnt++ , bmak.te_cnt++
+            } catch (a) { }
+        },
+        cma: function (a, t) {
+            try {
+                if (1 == t && bmak.mme_cnt < bmak.mme_cnt_lmt || 1 != t && bmak.mduce_cnt < bmak.mduce_cnt_lmt) {
+                    var e = a || window.event,
+                        n = -1,
+                        o = -1;
+                    e && e.pageX && e.pageY ? (n = Math.floor(e.pageX), o = Math.floor(e.pageY)) : e && e.clientX && e.clientY && (n = Math.floor(e.clientX), o = Math.floor(e.clientY));
+                    var m = e.toElement;
+                    null == m && (m = e.target);
+                    var r = bmak.gf(m),
+                        i = bmak.get_cf_date() - bmak.start_ts,
+                        c = bmak.me_cnt + "," + t + "," + i + "," + n + "," + o;
+                    if (1 != t) {
+                        c = c + "," + r;
+                        var b = void 0 !== e.which ? e.which : e.button;
+                        null != b && 1 != b && (c = c + "," + b)
+                    }
+                    c += ";", bmak.me_vel = bmak.me_vel + bmak.me_cnt + t + i + n + o, bmak.mact = bmak.mact + c, bmak.ta += i
+                }
+                1 == t ? bmak.mme_cnt++ : bmak.mduce_cnt++ , bmak.me_cnt++, 3 == t && bmak.bpd()
+            } catch (a) { }
+        },
+        gf: function (a) {
+            var t;
+            if (t = null == a ? document.activeElement : a, null == document.activeElement) return -1;
+            var e = t.getAttribute("name");
+            if (null == e) {
+                var n = t.getAttribute("id");
+                return null == n ? -1 : bmak.ab(n)
+            }
+            return bmak.ab(e)
+        },
+        cpa: function (a, t) {
+            try {
+                var e = !1;
+                if (1 == t && bmak.pme_cnt < bmak.pme_cnt_lmt || 1 != t && bmak.pduce_cnt < bmak.pduce_cnt_lmt) {
+                    var n = a || window.event;
+                    if (n && "mouse" != n.pointerType) {
+                        e = !0;
+                        var o = -1,
+                            m = -1;
+                        n && n.pageX && n.pageY ? (o = Math.floor(n.pageX), m = Math.floor(n.pageY)) : n && n.clientX && n.clientY && (o = Math.floor(n.clientX), m = Math.floor(n.clientY));
+                        var r = bmak.get_cf_date() - bmak.start_ts,
+                            i = bmak.pe_cnt + "," + t + "," + r + "," + o + "," + m + ";";
+                        bmak.pe_vel = bmak.pe_vel + bmak.pe_cnt + t + r + o + m, bmak.pact = bmak.pact + i, bmak.ta += r, 1 == t ? bmak.pme_cnt++ : bmak.pduce_cnt++
+                    }
+                }
+                1 == t ? bmak.pme_cnt++ : bmak.pduce_cnt++ , bmak.pe_cnt++
+            } catch (a) { }
+        },
+        cka: function (a, t) {
+            try {
+                var e = a || window.event,
+                    n = -1,
+                    o = 1;
+                if (bmak.ke_cnt < bmak.ke_cnt_lmt && e) {
+                    n = e.keyCode;
+                    var m = e.charCode,
+                        r = e.shiftKey ? 1 : 0,
+                        i = e.ctrlKey ? 1 : 0,
+                        c = e.metaKey ? 1 : 0,
+                        b = e.altKey ? 1 : 0,
+                        d = 8 * r + 4 * i + 2 * c + b,
+                        k = bmak.get_cf_date() - bmak.start_ts,
+                        l = bmak.gf(null),
+                        s = 0;
+                    m && n && (n = 0 != m && 0 != n && m != n ? -1 : 0 != n ? n : m), 0 == i && 0 == c && 0 == b && n >= 32 && (n = 3 == t && n >= 32 && n <= 126 ? -2 : n >= 33 && n <= 47 ? -3 : n >= 112 && n <= 123 ? -4 : -2), l != bmak.prevfid ? (bmak.fidcnt = 0, bmak.prevfid = l) : bmak.fidcnt = bmak.fidcnt + 1;
+                    if (0 == bmak.isIgn(n)) {
+                        var u = bmak.ke_cnt + "," + t + "," + k + "," + n + "," + s + "," + d + "," + l;
+                        null != e.isTrusted && !1 === e.isTrusted && (u += ",0"), u += ";", bmak.kact = bmak.kact + u, bmak.ke_vel = bmak.ke_vel + bmak.ke_cnt + t + k + n + d + l, bmak.ta += k
+                    } else o = 0
+                }
+                o && e && bmak.ke_cnt++
+            } catch (a) { }
+        }
+      }
+      bmak.startTracking()
+  </script>
+  
+</body>
+</html>

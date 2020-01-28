@@ -1,0 +1,254 @@
+<app-menu activePage="dashboard"></app-menu>
+<div *ngIf="addTaskToggle" class="add-task">
+    <div class="app-content" style="height: 100%;">
+        <div class="content-title">
+            Create task
+        </div>
+        <div class="container create">
+            <div *ngIf="isError" class="alert danger">
+                <span>Some fields are filled incorrectly :(</span>
+            </div>
+            <div *ngIf="isSuccess" class="alert success">
+                <span>{{ this.isEditing ? 'Your profile was updated successfully :)' : 'Your profile was created successfully :)' }}</span>
+            </div>
+            <div class="content">
+                <div *ngIf="this.loadedProfiles.length == 0">
+                    <p class="center-title force-center">
+                        You don't have any profile created :(
+                    </p>
+                    <div class="button big default force-center" (click)="routeTo('profile')">
+                        Create profile
+                    </div>
+                </div>
+                <form [formGroup]="form" id="form" style="position:fixed;left: 0px;" [class.blur]="this.loadedProfiles.length == 0">
+                    <div id="shipping" class="sides" id="formelement">
+                        <div class="left">
+                            <div class="title">
+                                Product info
+                            </div>
+                            <div class="input">
+                                <div class="label dark input">Search type</div>
+                                <select formControlName="searchType" tabindex="1" class="form-control">
+                                    <option class="value" selected value="keywords">Keywords</option>
+                                    <option class="value" value="url">URL</option>
+                                </select>
+                            </div>
+                            <div class="input">
+                                <div class="label dark input">{{ this.form.value.searchType }}</div>
+                                <input formControlName="typeValue" type="text" placeholder="Enter closest keywords to product..." [placeholder]="this.form.value.searchType == 'keywords' ? 'Enter closest keywords to product...' : 'Enter URL to product...'" tabindex="2" class="form-control keywords">
+                            </div>
+                            <div class="input">
+                                <div class="label dark input">Size</div>
+                                <select formControlName="size" tabindex="3" class="form-control">
+                                    <optgroup label="Sneakers">
+                                        <option class="value" selected value="3">US 3</option>
+                                        <option class="value" value="3.5">US 3.5</option>
+                                        <option class="value" value="4">US 4</option>
+                                        <option class="value" value="4.5">US 4.5</option>
+                                        <option class="value" value="5">US 5</option>
+                                        <option class="value" value="5.5">US 5.5</option>
+                                        <option class="value" value="6">US 6</option>
+                                        <option class="value" value="6.5">US 6.5</option>
+                                        <option class="value" value="7">US 7</option>
+                                        <option class="value" value="7.5">US 7.5</option>
+                                        <option class="value" value="8">US 8</option>
+                                        <option class="value" value="8.5">US 8.5</option>
+                                        <option class="value" value="9">US 9</option>
+                                        <option class="value" value="9.5">US 9.5</option>
+                                        <option class="value" value="10">US 10</option>
+                                        <option class="value" value="10.5">US 10.5</option>
+                                        <option class="value" value="11">US 11</option>
+                                        <option class="value" value="11.5">US 11.5</option>
+                                        <option class="value" value="12">US 12</option>
+                                        <option class="value" value="12.5">US 12.5</option>
+                                        <option class="value" value="13">US 13</option>
+                                        <option class="value" value="13.5">US 13.5</option>
+                                        <option class="value" value="14">US 14</option>
+                                        <option class="value" value="14.5">US 14.5</option>
+                                        <option class="value" value="15">US 15</option>
+                                        <option class="value" value="15.5">US 15.5</option>
+                                        <option class="value" value="16">US 16</option>
+                                        <option class="value" value="16.5">US 16.5</option>
+                                        <option class="value" value="17">US 17</option>
+                                        <option class="value" value="17.5">US 17.5</option>
+                                        <option class="value" value="18">US 18</option>
+                                    </optgroup>
+                                    <optgroup label="Clothes">
+                                        <option class="value" value="xxxs">XXX Small</option>
+                                        <option class="value" value="xxs">XX Small</option>
+                                        <option class="value" value="xs">X Small</option>
+                                        <option class="value" value="s">Small</option>
+                                        <option class="value" value="m">Medium</option>
+                                        <option class="value" value="l">Large</option>
+                                        <option class="value" value="xl">X Large</option>
+                                        <option class="value" value="xxl">XX Large</option>
+                                        <option class="value" value="xxxl">XXX Large</option>
+                                    </optgroup>
+                                    <optgroup label="Other">
+                                        <option class="value" value="o_s">One Size</option>
+                                        <option class="value" value="random">Random Size</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div *ngIf="this.form.value.site.includes('demandware')">
+                                <div class="input">
+                                    <div class="label dark input">Product ID</div>
+                                    <input formControlName="taskProductID" type="text" placeholder="Enter product id..." tabindex="8" class="form-control">
+                                </div>
+                                <div class="input">
+                                    <div class="label dark input">Release type</div>
+                                    <select formControlName="taskReleaseType" tabindex="9" class="form-control">
+                                        <option class="value" selected value="product">Product</option>
+                                        <option class="value" value="waitingroom">Waiting room</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class ="right">
+                            <div class="title">
+                                Other info
+                            </div>
+                            <div class="input">
+                                <div class="label dark input">Site</div>
+                                <select formControlName="site" tabindex="4" class="form-control">
+                                    <optgroup label="Supreme">
+                                        <option class="value" value="supreme|supreme">Supreme EU</option>
+                                        <option class="value" value="supreme|supreme">Supreme US</option>
+                                        <option class="value" value="supreme|supreme">Supreme JP</option>
+                                    </optgroup>
+                                    <optgroup label="Demandware">
+                                        <option class="value" value="demandware|yeezysupply">YeezySupply</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="input">
+                                <div class="label dark input">Profile</div>
+                                <select formControlName="profile" tabindex="5" class="form-control">
+                                    <option class="value" value="default" selected disabled>Select profile</option>
+                                    <option *ngFor="let profile of loadedProfiles; let i=index" class="value" value="profile._id">
+                                        (#{{ i + 1 }}) {{ profile.shipping.firstName }} {{ profile.shipping.lastName }} - {{ profile.card.type.charAt(0).toUpperCase() + profile.card.type.slice(1) }} ending with xxxx 
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="input">
+                                <div class="label dark input">Proxy (optional)</div>
+                                <select  formControlName="proxy" tabindex="6" class="form-control">
+                                    <option class="value" value="default" selected disabled>Select proxy</option>
+                                </select>                            
+                            </div>
+                            <div class="input">
+                                <div class="label dark input">Tasks count</div>
+                                <input formControlName="tasksCount" type="number" value="1" placeholder="Enter how many tasks you want generate..." tabindex="7" class="form-control">
+                            </div>
+                            <div *ngIf="this.form.value.site.includes('demandware')">
+                                <div class="input">
+                                    <div class="label dark input">Mode</div>
+                                    <select formControlName="taskMode" tabindex="10" class="form-control">
+                                        <option class="value" selected value="safe">Safe</option>
+                                        <option class="value" value="fast">Fast</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>a
+                    <div id="button-next" class="bottom">
+                        <div *ngIf="this.form.valid" class="button big-sticky-right next-step" (click)="this.create()">
+                            Create
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="app-actions" style="-webkit-app-region: no-drag">
+    <div id="add-task" class="button default" (click)="addTask()">
+        <i class="fa fa-plus"></i>
+        Create task
+    </div>
+    <div style="display: contents;" *ngIf="loadedTasks.length >= 1">
+        <div class="button green">
+            <i class="fa fa-play"></i>
+            Run all tasks
+        </div>
+        <div class="button red">
+            <i class="fa fa-pause"></i>
+            Stop all tasks
+        </div>
+        <div class="button orange">
+            <i class="fa fa-edit"></i>
+            Edit all tasks
+        </div>
+    </div>
+</div>
+<div class="app-actions-right" style="-webkit-app-region: no-drag">
+    <div class="button dark" (click)="this.openHarvester()">
+        <i class="fas fa-external-link-alt"></i>
+        Open harvester
+    </div>
+</div>
+
+<div class="app-content" style="overflow-y: scroll;">
+    <div class="content-title">
+        Dashboard
+    </div>
+    <div class="search">
+        <input type="text" name="search" id="" placeholder="Search task by name, id or product name...">
+        <div class="icon">
+            <i class="fa fa-search"></i>
+        </div>
+    </div>
+    <div class="right">
+        <p>
+            <i class="fa fa-circle green"></i> 
+            {{ loadedTasks.length }} Total tasks
+        </p>
+    </div>
+    <div class="table">
+        <div class="content" id="task-sortable">
+            <div class="row" *ngFor="let task of loadedTasks; let i=index" [attr.id]="task._id">
+                <div class="drag-icon">
+                    <i class="fa fa-bars"></i>
+                </div>
+                <div class="icon">
+                    <i>{{ task.product.site.split('|')[1][0].charAt(0).toUpperCase() }}</i>
+                </div>
+                <div class="uid">
+                    <p>#{{ task.uniqueId }}</p>
+                </div>
+                <div class="product">
+                    <p class="label dark task-name-toggle" (click)="toggleTask(i)">{{ task.product.toggledName  }}</p>
+                </div>
+                <div class="status">
+                    <p class="{{ task.info.status.includes('|') ? task.info.status.split('|')[0] : task.info.status }}">{{task.info.status.includes('|') ? task.info.status.split('|')[1].charAt(0).toUpperCase() + task.info.status.split('|')[1].slice(1) : task.info.status.charAt(0).toUpperCase() + task.info.status.slice(1) }}</p>
+                </div>
+                <div class="actions">
+                    <div class="button trash tooltip" (click)="removeTask(i)">
+                        <i class="fa fa-trash"></i>
+                        <span class="tooltiptext">Remove task</span>
+                    </div>
+                    <div class="button restart tooltip">
+                        <i class="fa fa-redo-alt"></i>
+                        <span class="tooltiptext">Restart task</span>
+                    </div>
+                    <div class="button stop tooltip">
+                        <i class="fa fa-stop"></i>
+                        <span class="tooltiptext">Stop task</span>
+                    </div>
+                    <div class="button start tooltip" (click)="startTask(task._id, task)">
+                        <i class="fa fa-play"></i>
+                        <span class="tooltiptext">Start task</span>
+                    </div>
+                </div>
+            </div>
+            <h1 *ngIf="this.loadedTasks.length == 0" class="empty">
+                Your dashboard is empty... :(<br/>
+                <div class="button dark big" (click)="addTask()">
+                    Create task
+                </div>
+            </h1>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

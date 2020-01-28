@@ -1,0 +1,28 @@
+<div class="startup noselect">
+  <div class="logo">
+    <h1>Hornet</h1>
+    <span>All in One tool</span>
+  </div>
+  <div *ngIf="this.isError">
+    <div class="alert danger">
+      License key you entered is invalid!
+    </div>
+  </div>
+  <form *ngIf="this.memberStatus == 'license' || this.memberStatus == 'error'" [formGroup]="form">
+    <input formControlName="license" type="text" placeholder="Please, enter your license key..." class="token">
+    <div *ngIf="this.form.valid" (click)="checkLicense()" class="button dark license">
+      <i class="fa fa-angle-right"></i>
+    </div>
+  </form>
+  <div class="loader" *ngIf="this.memberStatus !== 'license'">Loading...</div>
+  <ng-template [ngIf]="memberStatus != 'await' || 'license'">
+      <span class="loaded-message">
+        {{ loadedMessage }}
+      </span>
+  </ng-template>  
+  <div class="footer">
+    <div class="version">
+      <span>{{ environment.version }}</span>
+    </div>
+  </div>
+</div>

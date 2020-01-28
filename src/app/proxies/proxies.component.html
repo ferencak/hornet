@@ -1,0 +1,111 @@
+<app-menu activePage="proxies"></app-menu>
+<div class="app-actions" style="-webkit-app-region: no-drag">
+    <div id="add-task" class="button default">
+        <i class="fa fa-plus"></i>
+        Add proxies
+    </div>
+    <div class="button green">
+        <i class="fa fa-tachometer-alt"></i>
+        Test all proxies
+    </div>
+    <div class="button red">
+        <i class="fa fa-trash"></i>
+        Remove failed proxies
+    </div>
+</div>
+
+<div class="app-content" style="overflow-y: scroll;">
+    <div class="content-title">
+        Proxies
+    </div>
+    <div class="right">
+        <p> <i class="fa fa-circle orange"></i> 29 Total proxies</p>
+    </div>
+    <div class="table">
+        <div class="content" id="proxy-sortable">
+            <div class="row">
+                <div class="drag-icon">
+                    <i class="fa fa-bars"></i>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-network-wired"></i>
+                </div>
+                <div class="uid">
+                    <p>#XYZ</p>
+                </div>
+                <div class="product">
+                    <span class="label dark">127.0.0.1:6969</span>
+                </div>
+                <div class="status">
+                    <p class="success">11 ms</p>
+                </div>
+                <div class="actions">
+                    <div class="button trash tooltip">
+                        <i class="fa fa-trash"></i>
+                        <span class="tooltiptext">Remove proxy</span>
+                    </div>
+                    <div class="button start tooltip">
+                        <i class="fa fa-tachometer-alt"></i>
+                        <span class="tooltiptext">Test proxy</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="drag-icon">
+                    <i class="fa fa-bars"></i>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-network-wired"></i>
+                </div>
+                <div class="uid">
+                    <p>#XYZ</p>
+                </div>
+                <div class="product">
+                    <span class="label dark">127.0.0.1:6969</span>
+                </div>
+                <div class="status">
+                    <p class="waiting">144 ms</p>
+                </div>
+                <div class="actions">
+                    <div class="button trash tooltip">
+                        <i class="fa fa-trash"></i>
+                        <span class="tooltiptext">Remove proxy</span>
+                    </div>
+                    <div class="button start tooltip">
+                        <i class="fa fa-tachometer-alt"></i>
+                        <span class="tooltiptext">Test proxy</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="drag-icon">
+                    <i class="fa fa-bars"></i>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-network-wired"></i>
+                </div>
+                <div class="uid">
+                    <p>#XYZ</p>
+                </div>
+                <div class="product">
+                    <span class="label dark">127.0.0.1:6969</span>
+                </div>
+                <div class="status">
+                    <p class="failed">Failed</p>
+                </div>
+                <div class="actions">
+                    <div class="button trash tooltip">
+                        <i class="fa fa-trash"></i>
+                        <span class="tooltiptext">Remove proxy</span>
+                    </div>
+                    <div class="button start tooltip">
+                        <i class="fa fa-tachometer-alt"></i>
+                        <span class="tooltiptext">Test proxy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,37 @@
+<div class="app-content">
+    <div class="content">
+        <div id="setup" *ngIf="this.step == 0" class="setup">
+            <div class="items">
+                <div class="item supreme" (click)="select('supremenewyork.com')">
+                    <span class="badge">
+                        <p>S</p>
+                    </span>
+                    <span>
+                        Supreme
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div id="loading" *ngIf="this.step == 1" class="loading" style="display:none">
+            <div class="loader"></div>
+            <div id="recaptcha-loading">
+                <p>GENERATING RECAPTCHA</p>
+            </div>
+        </div>
+        <div *ngIf="this.step == 2" class="recaptcha">
+            <iframe class="captcha" src="https://www.hornetaio.app/recaptcha/" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>
+<div class="app-actions" style="-webkit-app-region: no-drag">
+    <div class="button dark" (click)="back()" *ngIf="selected">
+        <i class="fa fa-angle-left"></i>
+        Back
+    </div>
+</div>
+<div class="app-actions-right" style="-webkit-app-region: no-drag">
+    <div class="button dark" (click)="add()">
+        <i class="fa fa-plus"></i>
+        Add
+    </div>
+</div>

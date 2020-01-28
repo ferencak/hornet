@@ -1,0 +1,335 @@
+.search {
+    background: #212121;
+    border-radius: 5px;
+    margin: 0px auto -30px;
+    position: relative;
+    top: 8px;
+    width: 260px;
+    height: 24px;
+    input {
+        border: 0px;
+        background: transparent;
+        display: -webkit-box;
+        margin: 0 auto;
+        width: -webkit-fill-available;
+        height: -webkit-fill-available;
+        padding-left: 10px;
+        font-size: 9px;
+        color: #9090908c;
+        font-weight: bolder;
+        font-family: sans-serif, "Verdana";
+        transition: .2s;
+    }
+    input::placeholder {
+        color: #90909041;
+    }
+    input:focus {
+        background-color: #282828;
+        outline: none;
+        border-radius: 5px;
+        transition: .2s ease-in-out
+    }
+    input:focus .search {
+        width:500px;
+    }
+    .icon {
+        color: #4c4c4c8c;
+        width: fit-content;
+        position: absolute;
+        top: 7px;
+        right: 10px;
+        font-size: 10px;
+    }
+}
+.add-task {
+    position: absolute;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+    z-index: 2;
+    background: #0e0e0ee6;
+    opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: .1s;
+}
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+.right {
+    display: -webkit-inline-box;
+    float: right;
+    margin-right: 8px;
+    margin-top: -6px;
+    p {
+        color: #777;
+        font-size: 10px;
+        font-family: "Baloo Bhai";
+        background: #dedede14;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 3px;
+        margin-bottom: 0px;
+        margin-top: 18px;
+        margin-right: 5px;
+        text-transform: uppercase;
+        i {
+            font-size: 6px;
+            display: -webkit-inline-box;
+            position: relative;
+            top: -1.4px;
+            left: -3px;
+        }
+        i.green {
+            color: #209e59;
+        }
+        i.red {
+            color:red;
+        }
+        i.orange {
+            color: orange
+        }
+    }
+}
+.table {
+    width: 100%;
+    display: -webkit-box;
+    height: 100%;
+    top: 15px;
+    position: relative;
+    padding-bottom: 90px;
+    .head {
+        position: absolute;
+        top: -26px;
+        width: -webkit-fill-available;
+        .item {
+            color: #fff;
+            display: -webkit-inline-box;
+            width: 20%;
+            margin-left: -33px;
+            margin-right: 20px;
+        }
+    }
+    .content {
+        width: -webkit-fill-available;
+        margin: 13px;
+        margin-top: 0px;
+        font-family: "Baloo Bhai";
+        font-size: 12px;
+        line-height: 26.5px;
+        color: #353535;
+        .row {
+            background: #171717;
+            width: 100%;
+            height: 50px;
+            display: -webkit-box;
+            margin-top: 20px;
+            box-shadow: 0px 0px 20px -12px black;
+            border-radius: 5px;
+            .drag-icon {
+                position: relative;
+                top: 15px;
+                font-size: 21px;
+                color: #292929;
+                overflow: hidden;
+                width: 10px;
+                display: -webkit-inline-box;
+                z-index: 1;
+                cursor: -webkit-grab;
+            }
+            .drag-icon:hover i {
+                color: #00ff89;
+                transition: .2s;
+            }
+            .icon {
+                display: -webkit-box;
+                height: 50px;
+                width: 7%;
+                border-top-right-radius: 0px;
+                background: #5050500d;
+                max-width: 7%;
+                margin-right: 20px;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+                position: relative;
+                left: -10px;
+                i {
+                    display: -webkit-box;
+                    line-height: 51.5px;
+                    text-align: center;
+                    margin: 0 auto;
+                    background-image: linear-gradient(to right, #21f191, #00ff89);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    font-size: 13px;
+                    text-shadow: 0px 0px 20px black;
+                }
+            }
+            .uid {
+                display:-webkit-box;
+                width: 10%;
+                margin-right: 20px;
+            }
+            .product {
+                display:-webkit-box;
+                width: 30%;
+                margin-right: 20px;
+                p {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    max-width: -webkit-fill-available;
+                }
+            }
+            .status {
+                display: -webkit-box;
+                width: 120px;
+                margin-right: 20px;
+                background: #5050500d;
+                p {
+                    width: 100%;
+                    text-align: center;
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: #21212100;
+                }
+                p.success {
+                    background-image: linear-gradient(to right, #21f191, #00ff89);
+                    text-shadow: 0px 0px 20px #317b59;
+                }
+                p.waiting {
+                    background-image: linear-gradient(to right, #ff9c22, #f3884a);
+                    text-shadow: 0px 0px 20px #9c6c306b
+                }
+                p.failed {
+                    background-image: linear-gradient(to right, #fb2222, #b53434);
+                    text-shadow: 0px 0px 20px #9c3030ab;
+                }
+            }
+            .actions {
+                position: absolute;
+                right: 25px;
+                .button.start {
+                    float: right;
+                    i {
+                        line-height: 49.5px!important;
+                        color: #484848;
+                        background-image: linear-gradient(to right, #20be75, #11ca74);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        font-size: 7px;
+                        transition: .2s;
+                    }
+                }
+                .button.start:hover i{
+                    background-image: linear-gradient(to right, #16e74a, #12ca40);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    text-shadow: 0px 0px 14px #26d87f;
+                    transition: .2s;
+                }
+                .button.stop {
+                    float: right;
+                    i {
+                        line-height: 49.5px!important;
+                        color: #484848;
+                        background-image: linear-gradient(to right, #e0be5d, #b1911b);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        font-size: 7px;
+                        transition: .2s;
+                    }
+                }
+                .button.stop:hover i{
+                    background-image: linear-gradient(to right, #f1be32, #e7ba17);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    text-shadow: 0px 0px 14px #f1be32;
+                    transition: .2s;
+                }
+                .button.restart {
+                    float: right;
+                    i {
+                        line-height: 49.5px!important;
+                        color: #484848;
+                        background-image: linear-gradient(to right, #ff7878, #f53838);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        font-size: 7px;
+                        transition: .2s;
+                    }
+                }
+                .button.restart:hover i{
+                    background-image: linear-gradient(to right, #fb4545, #d83636);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    text-shadow: 0px 0px 14px #fd2626;
+                    transition: .2s;
+                }
+                .button.trash {
+                    float: right;
+                    i {
+                        line-height: 49.5px!important;
+                        color: #484848;
+                        background-image: linear-gradient(to right, #ff0000, #6b1717);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        font-size: 7px;
+                        transition: .2s;
+                    }
+                }
+                .button.trash:hover i{
+                    background-image: linear-gradient(to right, #fb4545, #d83636);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    text-shadow: 0px 0px 14px #fd2626;
+                    transition: .2s;
+                }
+            }
+        }
+    }
+}
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: #0000008a;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity .6s;
+    width: -webkit-fill-available;
+    bottom: 48%;
+    left: 68%;
+    margin-left: -50px;
+    border-radius: 5px;
+    transition:visibility 0.1s ease-in-out,opacity 0.1s ease-in-out;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    transition:visibility 0.2s ease-in-out,opacity 0.2s ease-in-out;
+}
+.tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #0000008a transparent transparent transparent;
+  }
