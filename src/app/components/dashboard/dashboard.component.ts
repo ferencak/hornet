@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
     private profilesService: ProfilesService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private requestService: RequestService, 
+    private requestService: RequestService,
 
     private yeezySupplyService: YeezySupplyService,
     private supremeService: SupremeService
@@ -51,28 +51,29 @@ export class DashboardComponent implements OnInit {
     this.profilesService.getProfiles().forEach((profile) => {
       this.loadedProfiles.push(profile)
     })
-  } 
+  }
 
-  ngOnInit() {
+  ngOnInit () {
     $("#task-sortable").sortable({
       delay: 0,
-      handle: '.drag-icon', 
+      handle: '.drag-icon',
       helper: 'clone',
       revert: 250
     })
     $("#task-sortable").disableSelection()
-  
-    this.database = db.connect('/hornet/db', ['tasks'])
+
+    let dbPath = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share")
+    this.database = db.connect(dbPath + '/hornet/db', ['tasks'])
   }
 
-  routeTo(path: String) {
+  routeTo (path: String) {
     this.router.navigate([path])
   }
 
-  addTask() {
-    
-    if(this.loadedProfiles.length == 0) {
-      $(document).ready(function () { 
+  addTask () {
+
+    if (this.loadedProfiles.length == 0) {
+      $(document).ready(function () {
         $("#form *").attr('disabled', 'disabled')
       })
     }
@@ -80,21 +81,21 @@ export class DashboardComponent implements OnInit {
       searchType: ['url', Validators.required],
       typeValue: ['', Validators.required],
       size: ['3', Validators.required],
-      site: ['supreme_eu', Validators.required], 
+      site: ['supreme_eu', Validators.required],
       profile: ['', Validators.required],
       proxy: [''],
       tasksCount: ['1', Validators.required],
       tags: [['dog', 'cat', 'bird']],
-      taskProductID: ['XX0000', ''], 
-      taskReleaseType: ['product', ''], 
-      taskMode: ['safe', ''] 
+      taskProductID: ['XX0000', ''],
+      taskReleaseType: ['product', ''],
+      taskMode: ['safe', '']
     })
 
     this.value = this.form.controls.tags.valueChanges
 
     this.addTaskToggle = this.addTaskToggle != true
     let buttonElement = document.getElementById("add-task")
-    if(this.addTaskToggle) {
+    if (this.addTaskToggle) {
       buttonElement.classList.add('active')
       buttonElement.classList.remove('deactive')
     } else {
@@ -103,73 +104,73 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  async create() {
+  async create () {
     let productName
-    if(this.form.value.searchType == 'url') {
-      switch(this.form.value.site.split('|')[0]) {
-        case 'shopify': 
-        break
-        case 'demandware': 
+    if (this.form.value.searchType == 'url') {
+      switch (this.form.value.site.split('|')[0]) {
+        case 'shopify':
+          break
+        case 'demandware':
           productName = this.form.value.taskProductID
-        break
+          break
         case 'footsites': break
         case 'supreme':
           productName = $(".protect").first().text() + ' ' + $(".style.protect").text()
-        break 
-        default: 
-          this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-          this.router.navigate(['dashboard']))
+          break
+        default:
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+            this.router.navigate(['dashboard']))
       }
     }
-    for(let i=0;i<this.form.value.tasksCount;i++) {
+    for (let i = 0; i < this.form.value.tasksCount; i++) {
       this.database.tasks.save({
         uniqueId: Math.random().toString(36).substring(9),
-        typeValue: this.form.value.typeValue, 
+        typeValue: this.form.value.typeValue,
         profile: this.form.value.profile,
-        proxy: this.form.value.proxy, 
-        tags: this.form.value.tags, 
+        proxy: this.form.value.proxy,
+        tags: this.form.value.tags,
         product: {
-          searchType: this.form.value.searchType, 
+          searchType: this.form.value.searchType,
           size: this.form.value.size,
           site: this.form.value.site,
-          name: productName, 
-          id: this.form.value.taskProductID, 
-          releastType: this.form.value.taskReleaseType, 
+          name: productName,
+          id: this.form.value.taskProductID,
+          releastType: this.form.value.taskReleaseType,
           mode: this.form.value.taskMode
-        }, 
+        },
         info: {
           status: 'ready'
         }
       })
     }
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    this.router.navigate(['dashboard']))
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate(['dashboard']))
   }
 
-  startTask(taskId: any, task:any) {
+  startTask (taskId: any, task: any) {
     let selectedTask = this.loadedTasks.find(r => r._id == taskId)
     selectedTask.info.status = 'waiting'
-    if(task.product.site.includes('demandware')) {
+    if (task.product.site.includes('demandware')) {
       this.yeezySupplyService.make(task)
-    } else if(task.product.site.includes('supreme')) {
+    } else if (task.product.site.includes('supreme')) {
       this.supremeService.make(task)
-    } else if(task.product.site.includes('footsites')) {
+    } else if (task.product.site.includes('footsites')) {
 
     } else {
       console.error('Error', 'Unknown site')
     }
   }
 
-  removeTask(taskId: any) {
-    this.database.tasks.remove({_id: this.loadedTasks[taskId]._id})
-    this.router.navigateByUrl('/', {skipLocationChange: true}).then(() =>
-    this.router.navigate(['dashboard']))
+  removeTask (taskId: any) {
+    this.database.tasks.remove({ _id: this.loadedTasks[taskId]._id })
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate(['dashboard']))
   }
 
-  openHarvester() {
+  openHarvester () {
     let remote = require('electron').remote
     let BrowserWindow = remote.BrowserWindow
-    let win = new BrowserWindow({ 
+    let win = new BrowserWindow({
       width: 300,
       height: 400,
       minWidth: 300,
@@ -179,13 +180,13 @@ export class DashboardComponent implements OnInit {
       webPreferences: {
         nodeIntegration: true,
       },
-      frame:false,
+      frame: false,
     })
     win.loadURL('http://localhost:4200/#/harvester')
     win.show()
   }
-  
-  toggleTask(taskId: any) {
+
+  toggleTask (taskId: any) {
     shell.openExternal(this.loadedTasks[taskId].typeValue)
   }
 

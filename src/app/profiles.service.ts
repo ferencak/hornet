@@ -6,14 +6,15 @@ let db = require('diskdb')
   providedIn: 'root'
 })
 export class ProfilesService {
-  
+
   private databse: any
-  
+
   constructor() {
-    this.databse = db.connect('/hornet/db', ['profiles'])
+    let dbPath = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share")
+    this.databse = db.connect(dbPath + '/hornet/db', ['profiles'])
   }
 
-  getProfiles() {
+  getProfiles () {
     return this.databse.profiles.find()
   }
 

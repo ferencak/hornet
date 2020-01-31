@@ -2,14 +2,16 @@ import { app, BrowserWindow, screen, ipcMain } from 'electron'
 import * as path from 'path';
 import * as url from 'url';
 
+let dbPath = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share")
+
 let db = require('diskdb')
-let database = db.connect('/hornet/db', ['mousedata'])
+let database = db.connect(dbPath + '/hornet/db', ['mousedata'])
 
 let win, serve
 const args = process.argv.slice(1)
 serve = args.some(val => val === '--serve')
 
-function createWindow() {
+function createWindow () {
 
   win = new BrowserWindow({
     width: 300,
@@ -21,8 +23,8 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
-    frame:false,
-    center:true
+    frame: false,
+    center: true
   })
   if (serve) {
     require('electron-reload')(__dirname, {
@@ -64,6 +66,6 @@ try {
   console.error(e)
 }
 
-ipcMain.on('mouseData', async(event, arg) => {
-  database.mousedata.count() > 200 ? database.mousedata.remove() && db.connect('/hornet/db', ['mousedata']) : database.mousedata.save({ timestamp: Date.now(), data: arg })
+ipcMain.on('mouseData', async (event, arg) => {
+  database.mousedata.count() > 200 ? database.mousedata.remove() && db.connect(dbPath + '/hornet/db', ['mousedata']) : database.mousedata.save({ timestamp: Date.now(), data: arg })
 })

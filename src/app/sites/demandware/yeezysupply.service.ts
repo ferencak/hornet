@@ -22,11 +22,12 @@ export class YeezySupplyService {
     private requestService: RequestService
   ) { }
 
-  async make(task: any) {
+  async make (task: any) {
     this.task = task
 
-    if(this.task.product.mode == 'safe') {
-      this.mouseDataDatabase = db.connect('/hornet/db', ['mousedata'])
+    if (this.task.product.mode == 'safe') {
+      let dbPath = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share")
+      this.mouseDataDatabase = db.connect(dbPath + '/hornet/db', ['mousedata'])
       this.mouseData = this.mouseDataDatabase.mousedata.find()
     }
     this.task.info.status = 'other|Getting Cookie'
@@ -34,24 +35,24 @@ export class YeezySupplyService {
 
     this.task.info.status = 'other|Finding product'
     await this.checkProduct()
-  
+
   }
 
-  async checkProduct() {
+  async checkProduct () {
     console.log(`https://www.yeezysupply.com/api/products/${this.task.product.id}/availability`)
     let response = await got(`https://www.yeezysupply.com/api/products/${this.task.product.id}/availability`, {
       decompress: false,
       method: 'GET',
       cookieJar: this.cookieJar,
-      gzip: true, 
+      gzip: true,
       headers: {
         'user-agent': this.userAgent,
         'origin': 'http://www.yeezysupply.com',
-				'referer': `https://www.yeezysupply.com/product/${this.task.product.id}/`,
+        'referer': `https://www.yeezysupply.com/product/${this.task.product.id}/`,
         'content-type': 'application/json',
-				'accept': 'application/json',
-				'accept-encoding': 'gzip, deflate',
-				'sec-fetch-mode': 'cors',
+        'accept': 'application/json',
+        'accept-encoding': 'gzip, deflate',
+        'sec-fetch-mode': 'cors',
         'sec-fetch-site': 'same-origin'
       }
     })
@@ -59,27 +60,27 @@ export class YeezySupplyService {
     console.log(res)
   }
 
-  async getSensorData(cookie: any = false, mousedata: any = false) {
-    let response = await got(`${AppConfig.akamai.api.url}/ys/generateSensorData`, { 
+  async getSensorData (cookie: any = false, mousedata: any = false) {
+    let response = await got(`${AppConfig.akamai.api.url}/ys/generateSensorData`, {
       decompress: false,
       headers: {
         'authorization': btoa(`${AppConfig.akamai.api.username}:${AppConfig.akamai.api.password}`),
-        'abck-cookie': cookie ? cookie : 'false', 
+        'abck-cookie': cookie ? cookie : 'false',
         'mousedata': mousedata ? mousedata : 'false'
       }
     })
     return JSON.parse(response.body)
   }
 
-  async getCookie(jar: any, initial: Boolean = false) {
+  async getCookie (jar: any, initial: Boolean = false) {
     let sensorDataResponse: any, form: any, abck: any, validCookie: any
-    if(initial) {
+    if (initial) {
       sensorDataResponse = await this.getSensorData()
       form = {
         'sensor_data': sensorDataResponse.sensor_data
       }
       this.userAgent = sensorDataResponse.user_agent
-      let firstRequest = await got(`https://www.yeezysupply.com/static/${AppConfig.akamai.name}`, { 
+      let firstRequest = await got(`https://www.yeezysupply.com/static/${AppConfig.akamai.name}`, {
         cookieJar: jar,
         method: "post",
         json: form,
@@ -93,21 +94,21 @@ export class YeezySupplyService {
         }
       })
 
-			for (let i = 0; i < firstRequest.headers['set-cookie'].length; i++) {
-				if (firstRequest.headers['set-cookie'][i].includes('abck')) {
-					abck = firstRequest.headers['set-cookie'][i].split(';')[0].replace('_abck=', '')
-				}
+      for (let i = 0; i < firstRequest.headers['set-cookie'].length; i++) {
+        if (firstRequest.headers['set-cookie'][i].includes('abck')) {
+          abck = firstRequest.headers['set-cookie'][i].split(';')[0].replace('_abck=', '')
+        }
       }
-      
+
       let selectedMouseData = this.mouseData[0]
       sensorDataResponse = await this.getSensorData(abck, JSON.stringify(selectedMouseData.data))
-      this.mouseDataDatabase.mousedata.remove({_id: selectedMouseData._id})
+      this.mouseDataDatabase.mousedata.remove({ _id: selectedMouseData._id })
 
       form = {
         'sensor_data': sensorDataResponse.sensor_data
       }
 
-      let secondRequest = await got(`https://www.yeezysupply.com/static/${AppConfig.akamai.name}`, { 
+      let secondRequest = await got(`https://www.yeezysupply.com/static/${AppConfig.akamai.name}`, {
         cookieJar: jar,
         method: "post",
         json: form,
@@ -132,7 +133,7 @@ export class YeezySupplyService {
     }
   }
 
-  async addToCart() {
+  async addToCart () {
 
   }
 

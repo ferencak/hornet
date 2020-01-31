@@ -11,10 +11,10 @@ export class RestApiService {
     private member: MemberService
   ) { }
 
-  async emit(event: string, args: any, next = false) {
+  async emit (event: string, args: any, next = false) {
     try {
-      return await got(`http://89.203.249.215:3344/1.0/${event}/${this.member.getMachineId()}/${ next ? next : '' }`, args)
-    } catch ( error ) {
+      return await got(`http://89.203.248.201:3344/1.0/${event}/${this.member.getMachineId()}/${next ? next : ''}`, args)
+    } catch (error) {
       console.error('Error', error)
     }
   }

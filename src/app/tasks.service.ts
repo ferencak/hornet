@@ -6,14 +6,15 @@ let db = require('diskdb')
   providedIn: 'root'
 })
 export class TasksService {
-  
+
   private databse: any
-  
+
   constructor() {
-    this.databse = db.connect('/hornet/db', ['tasks'])
+    let dbPath = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : process.env.HOME + "/.local/share")
+    this.databse = db.connect(dbPath + '/hornet/db', ['tasks'])
   }
 
-  getTasks() {
+  getTasks () {
     return this.databse.tasks.find()
   }
 
